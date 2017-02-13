@@ -53,4 +53,8 @@
 
     <!-- Data Saver Statusbar Icon -->
     <string name="status_bar_data_saver">Data saver</string>
+
+    <!-- Text to use when the number in a notification info is too large -->
+    <string name="status_bar_notification_info_overflow" translatable="false">\u221E</string>
+
 </resources>
