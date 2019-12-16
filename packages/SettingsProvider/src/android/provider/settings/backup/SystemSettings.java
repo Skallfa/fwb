@@ -96,5 +96,6 @@ public class SystemSettings {
         Settings.System.QS_PANEL_STYLE,
         Settings.System.LOCKSCREEN_ROTATION,
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
+        Settings.System.FLASHLIGHT_ON_CALL,
     };
 }
