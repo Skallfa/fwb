@@ -42,4 +42,6 @@
     <!-- Label for current user in power menu options dialog -->
     <string name="global_action_restart_systemui">SystemUI</string>
 
+    <!-- Data Saver Statusbar Icon -->
+    <string name="status_bar_data_saver">Data saver</string>
 </resources>
