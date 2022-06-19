@@ -6182,6 +6182,12 @@ public final class Settings {
          */
 
         /**
+         * QS Panel style
+         * @hide
+         */
+        public static final String QS_PANEL_STYLE = "qs_panel_style";
+
+        /**
          * QS Header
          * @hide
          */
