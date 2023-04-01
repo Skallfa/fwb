@@ -6218,6 +6218,13 @@ public final class Settings {
         };
 
         /**
+         * Whether to enable statusbar brightness control
+         * @hide
+         */
+        @Readable
+        public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
+        
+        /**
          * These are all public system settings
          *
          * @hide
