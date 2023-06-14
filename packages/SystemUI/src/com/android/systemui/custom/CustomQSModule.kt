@@ -12,6 +12,7 @@ import com.android.systemui.qs.tiles.SoundTile
 import com.android.systemui.qs.tiles.AmbientDisplayTile
 import com.android.systemui.qs.tiles.UsbTetherTile
 import com.android.systemui.qs.tiles.VolumeTile
+import com.android.systemui.qs.tiles.AODTile
 import com.android.systemui.qs.tiles.VpnTile
 import com.android.systemui.qs.tiles.LiveDisplayTile
 import com.android.systemui.qs.tiles.ReadingModeTile
@@ -83,6 +84,12 @@ interface CustomQSModule {
     @IntoMap
     @StringKey(VolumeTile.TILE_SPEC)
     fun bindVolumeTile(volumeTile: VolumeTile): QSTileImpl<*>
+
+    /** Inject AODTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(AODTile.TILE_SPEC)
+    fun bindAODTile(aodTile: AODTile): QSTileImpl<*>
 
     /** Inject VpnTile into tileMap in QSModule */
     @Binds
