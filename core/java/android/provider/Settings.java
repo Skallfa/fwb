@@ -6231,6 +6231,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_ENABLED);
             PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_TIMEOUT);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_CHIP);
+            PRIVATE_SETTINGS.add(FORCE_FULLSCREEN_CUTOUT_APPS);
         }
         /**
          * These entries are considered common between the personal and the managed profile,
