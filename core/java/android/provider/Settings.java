@@ -6021,6 +6021,14 @@ public final class Settings {
          */
         public static final String STATUSBAR_COLORED_ICONS = "statusbar_colored_icons";
 
+        /**        
+         * Statusbar clock background
+         * 0 - hide accented chip
+         * 1 - show accented chip (default)
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_CHIP ="statusbar_clock_chip";
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
