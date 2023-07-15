@@ -6217,6 +6217,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SWIPE_TO_SCREENSHOT);
             PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_ENABLED);
             PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_TIMEOUT);
+            PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_CHIP);
         }
         /**
          * These entries are considered common between the personal and the managed profile,
