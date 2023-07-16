@@ -96,7 +96,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
 import com.android.internal.widget.ILockSettings;
 
-import com.android.internal.util.xtended.HideDeveloperStatusUtils;
+import com.android.internal.util.custom.HideDeveloperStatusUtils;
 
 import java.io.IOException;
 import java.lang.annotation.ElementType;
