@@ -7,6 +7,7 @@ import com.android.systemui.qs.tiles.WifiTile
 import com.android.systemui.qs.tiles.CaffeineTile
 import com.android.systemui.qs.tiles.HeadsUpTile
 import com.android.systemui.qs.tiles.SyncTile
+import com.android.systemui.qs.tiles.SoundTile
 import com.android.systemui.qs.tiles.AmbientDisplayTile
 import com.android.systemui.qs.tiles.UsbTetherTile
 import com.android.systemui.qs.tiles.VpnTile
@@ -56,6 +57,12 @@ interface CustomQSModule {
     @IntoMap
     @StringKey(SyncTile.TILE_SPEC)
     fun bindSyncTile(syncTile: SyncTile): QSTileImpl<*>
+
+    /** Inject SoundTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(SoundTile.TILE_SPEC)
+    fun bindSoundTile(soundTile: SoundTile): QSTileImpl<*>
 
     /** Inject AmbientDisplayTile into tileMap in QSModule */
     @Binds
