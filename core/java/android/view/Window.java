@@ -51,6 +51,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.transition.Scene;
 import android.transition.Transition;
 import android.transition.TransitionManager;
