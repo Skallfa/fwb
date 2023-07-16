@@ -11952,6 +11952,12 @@ public final class Settings {
         public static final String HIDE_DEVELOPER_STATUS = "hide_developer_status";
 
         /**
+         * Whether to pulse ambient on new music tracks
+         * @hide
+         */
+        public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
