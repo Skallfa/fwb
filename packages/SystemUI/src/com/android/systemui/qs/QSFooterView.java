@@ -89,7 +89,6 @@ public class QSFooterView extends FrameLayout {
             mShouldShowBuildText = false;
             mBuildText.setSelected(false);
         }
-    }
 
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
