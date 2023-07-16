@@ -1299,7 +1299,7 @@ public class CarrierConfigManager {
             "carrier_vvm_package_name_string_array";
 
     /**
-     * Flag specifying whether ICCID is showed in SIM Status screen, default to false.
+     * Flag specifying whether ICCID is showed in SIM Status screen, default to true.
      */
     public static final String KEY_SHOW_ICCID_IN_SIM_STATUS_BOOL = "show_iccid_in_sim_status_bool";
 
@@ -8712,7 +8712,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_OPERATOR_SELECTION_EXPAND_BOOL, true);
         sDefaults.putBoolean(KEY_PREFER_2G_BOOL, false);
         sDefaults.putBoolean(KEY_4G_ONLY_BOOL, false);
-        sDefaults.putBoolean(KEY_SHOW_APN_SETTING_CDMA_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_APN_SETTING_CDMA_BOOL, true);
         sDefaults.putBoolean(KEY_SHOW_CDMA_CHOICES_BOOL, false);
         sDefaults.putBoolean(KEY_SMS_REQUIRES_DESTINATION_NUMBER_CONVERSION_BOOL, false);
         sDefaults.putBoolean(KEY_SUPPORT_EMERGENCY_SMS_OVER_IMS_BOOL, false);
@@ -8744,7 +8744,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_VVM_PREFETCH_BOOL, true);
         sDefaults.putString(KEY_CARRIER_VVM_PACKAGE_NAME_STRING, "");
         sDefaults.putStringArray(KEY_CARRIER_VVM_PACKAGE_NAME_STRING_ARRAY, null);
-        sDefaults.putBoolean(KEY_SHOW_ICCID_IN_SIM_STATUS_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_ICCID_IN_SIM_STATUS_BOOL, true);
         sDefaults.putBoolean(KEY_SHOW_SIGNAL_STRENGTH_IN_SIM_STATUS_BOOL, true);
         sDefaults.putBoolean(KEY_INFLATE_SIGNAL_STRENGTH_BOOL, false);
         sDefaults.putBoolean(KEY_CI_ACTION_ON_SYS_UPDATE_BOOL, false);
@@ -8828,7 +8828,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_ENABLE_APPS_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_EDITABLE_WFC_MODE_BOOL, true);
         sDefaults.putStringArray(KEY_WFC_OPERATOR_ERROR_CODES_STRING_ARRAY, null);
-        sDefaults.putInt(KEY_WFC_SPN_FORMAT_IDX_INT, 0);
+        sDefaults.putInt(KEY_WFC_SPN_FORMAT_IDX_INT, 1);
         sDefaults.putInt(KEY_WFC_DATA_SPN_FORMAT_IDX_INT, 0);
         sDefaults.putInt(KEY_WFC_FLIGHT_MODE_SPN_FORMAT_IDX_INT, -1);
         sDefaults.putBoolean(KEY_WFC_SPN_USE_ROOT_LOCALE, false);
@@ -8958,8 +8958,8 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_ENHANCED_4G_LTE_TITLE_VARIANT_INT, 0);
         sDefaults.putBoolean(KEY_NOTIFY_VT_HANDOVER_TO_WIFI_FAILURE_BOOL, false);
         sDefaults.putStringArray(KEY_FILTERED_CNAP_NAMES_STRING_ARRAY, null);
-        sDefaults.putBoolean(KEY_EDITABLE_WFC_ROAMING_MODE_BOOL, false);
-        sDefaults.putBoolean(KEY_SHOW_BLOCKING_PAY_PHONE_OPTION_BOOL, false);
+        sDefaults.putBoolean(KEY_EDITABLE_WFC_ROAMING_MODE_BOOL, true);
+        sDefaults.putBoolean(KEY_SHOW_BLOCKING_PAY_PHONE_OPTION_BOOL, true);
         sDefaults.putBoolean(KEY_USE_WFC_HOME_NETWORK_MODE_IN_ROAMING_NETWORK_BOOL, false);
         sDefaults.putBoolean(KEY_STK_DISABLE_LAUNCH_BROWSER_BOOL, false);
         sDefaults.putBoolean(KEY_ALLOW_METERED_NETWORK_FOR_CERT_DOWNLOAD_BOOL, false);
@@ -9268,7 +9268,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_DISPLAY_NO_DATA_NOTIFICATION_ON_PERMANENT_FAILURE_BOOL, false);
         sDefaults.putBoolean(KEY_UNTHROTTLE_DATA_RETRY_WHEN_TAC_CHANGES_BOOL, false);
         sDefaults.putBoolean(KEY_VONR_SETTING_VISIBILITY_BOOL, true);
-        sDefaults.putBoolean(KEY_VONR_ENABLED_BOOL, false);
+        sDefaults.putBoolean(KEY_VONR_ENABLED_BOOL, true);
         sDefaults.putBoolean(KEY_VONR_ON_BY_DEFAULT_BOOL, true);
         sDefaults.putStringArray(KEY_IWLAN_HANDOVER_POLICY_STRING_ARRAY, new String[]{
                 "source=GERAN|UTRAN|EUTRAN|NGRAN|IWLAN, "
