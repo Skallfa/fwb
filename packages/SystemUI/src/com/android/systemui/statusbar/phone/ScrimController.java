@@ -1492,8 +1492,6 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         mColors.setSecondaryColor(accent);
         mColors.setSupportsDarkText(
                 ColorUtils.calculateContrast(mColors.getMainColor(), Color.WHITE) > 4.5);
-
-        mBehindColors.setMainColor(mUseDualToneColor ? surfaceBackground : background);
         
         mNeedsDrawableColorUpdate = true;
     }
