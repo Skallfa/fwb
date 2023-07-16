@@ -51,7 +51,7 @@ public class AmbientDisplayConfiguration {
             Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
             Settings.Secure.DOZE_WAKE_LOCK_SCREEN_GESTURE,
             Settings.Secure.DOZE_WAKE_DISPLAY_GESTURE,
-            Settings.Secure.DOZE_TAP_SCREEN_GESTURE
+            Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
             Settings.Secure.DOZE_FOR_NOTIFICATIONS
     };
 
