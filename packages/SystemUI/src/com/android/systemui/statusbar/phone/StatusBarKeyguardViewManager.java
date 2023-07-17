@@ -1379,6 +1379,10 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         }
     }
 
+        public void showBouncerMessage(String message, ColorStateList colorState) {
+        setKeyguardMessage(message, colorState);
+    }
+
     @Override
     public ViewRootImpl getViewRootImpl() {
         ViewGroup viewGroup = mNotificationShadeWindowController.getNotificationShadeView();
