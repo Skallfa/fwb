@@ -256,11 +256,7 @@ constructor(
                 updateResources()
             }
         }
-
-        override fun onUiModeChanged() {
-            updateResources()
-        }
-
+        
     override fun onInit() {
         variableDateViewControllerFactory.create(date as VariableDateView).init()
         batteryMeterViewController.init()
