@@ -323,7 +323,7 @@ object KeyguardBottomAreaViewBinder {
                 Utils.getColorAttr(
                     view.context,
                     if (viewModel.isActivated) {
-                        com.android.internal.R.attr.colorAccentPrimary
+                        com.android.internal.R.attr.colorAccent
                     } else {
                         com.android.internal.R.attr.colorSurface
                     }
