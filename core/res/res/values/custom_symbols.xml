@@ -17,6 +17,9 @@
     <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
     <java-symbol type="bool" name="config_pocketModeSupported" />
 
+     <!-- Pocket Service -->
+    <java-symbol type="string" name="config_pocketJudgeVendorSensorName" />
+
     <!-- Device keyhandlers -->
     <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
     <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
