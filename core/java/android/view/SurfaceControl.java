@@ -455,6 +455,8 @@ public final class SurfaceControl implements Parcelable {
     @GuardedBy("mLock")
     private int mHeight;
 
+    private static final Object transactionLock = new Object();
+
     private WeakReference<View> mLocalOwnerView;
 
     static GlobalTransactionWrapper sGlobalTransaction;
@@ -3977,12 +3979,14 @@ public final class SurfaceControl implements Parcelable {
             if (this == other) {
                 return this;
             }
-            mResizedSurfaces.putAll(other.mResizedSurfaces);
-            other.mResizedSurfaces.clear();
-            mReparentedSurfaces.putAll(other.mReparentedSurfaces);
-            other.mReparentedSurfaces.clear();
-            nativeMergeTransaction(mNativeObject, other.mNativeObject);
-            return this;
+             synchronized(transactionLock) {
+                mResizedSurfaces.putAll(other.mResizedSurfaces);
+                other.mResizedSurfaces.clear();
+                mReparentedSurfaces.putAll(other.mReparentedSurfaces);
+                other.mReparentedSurfaces.clear();
+                nativeMergeTransaction(mNativeObject, other.mNativeObject);
+                return this;
+            }
         }
 
         /**
