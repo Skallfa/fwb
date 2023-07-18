@@ -44,6 +44,7 @@ import android.widget.TextView;
 import androidx.annotation.StyleRes;
 import androidx.annotation.VisibleForTesting;
 
+import com.android.settingslib.Utils;
 import com.android.settingslib.graph.CircleBatteryDrawable;
 import com.android.systemui.DualToneHandler;
 import com.android.systemui.R;
@@ -84,6 +85,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     private boolean mCharging;
     private boolean mIsOverheated;
     private boolean mDisplayShieldEnabled;
+    private boolean mPowerSaveEnabled;
     // Error state where we know nothing about the current battery state
     private boolean mBatteryStateUnknown;
     // Lazily-loaded since this is expected to be a rare-if-ever state
@@ -234,6 +236,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     void onPowerSaveChanged(boolean isPowerSave) {
         mAccessorizedDrawable.setPowerSaveEnabled(isPowerSave);
         mCircleDrawable.setPowerSaveEnabled(isPowerSave);
+        mPowerSaveEnabled = isPowerSave;
     }
 
     void onIsOverheatedChanged(boolean isOverheated) {
@@ -312,6 +315,11 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         if (mBatteryPercentView != null) {
             mEstimateText = null;
             String percentText = NumberFormat.getPercentInstance().format(mLevel / 100f);
+            if (mBatteryStyle == BATTERY_STYLE_TEXT && mCharging) {
+                // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
+                // from loading its emoji colored variant, using the uFE0E flag
+                percentText += "\u26A1\uFE0E";
+            }
             // Setting text actually triggers a layout pass (because the text view is set to
             // wrap_content width and TextView always relayouts for this). Avoid needless
             // relayout if the text didn't actually change.
@@ -319,6 +327,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 mBatteryPercentView.setText(percentText);
             }
         }
+        updatePercentTextColor();
 
         updateContentDescription();
     }
@@ -349,6 +358,21 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         setContentDescription(contentDescription);
     }
 
+    private void updatePercentTextColor() {
+        if (mBatteryPercentView == null) {
+            return;
+        }
+        if (mBatteryStyle == BATTERY_STYLE_TEXT && mPowerSaveEnabled) {
+            // Use the error (red) color, same as battery saver icon
+            mBatteryPercentView.setTextColor(Utils.getColorError(getContext()));
+        } else if (mTextColor != 0) {
+            mBatteryPercentView.setTextColor(mTextColor);
+        } else {
+            mBatteryPercentView.setTextColor(Utils.getColorAttr(
+                    getContext(), android.R.attr.textColorPrimary));
+        }
+    }
+
     void updateShowPercent() {
         final boolean showing = mBatteryPercentView != null;
         // TODO(b/140051051)
@@ -372,7 +396,6 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 if (mPercentageStyleId != 0) { // Only set if specified as attribute
                     mBatteryPercentView.setTextAppearance(mPercentageStyleId);
                 }
-                if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
                 updatePercentText();
                 addView(mBatteryPercentView, new LayoutParams(
                         LayoutParams.WRAP_CONTENT,
@@ -521,9 +544,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         mAccessorizedDrawable.setColors(foregroundColor, backgroundColor, singleToneColor);
         mCircleDrawable.setColors(foregroundColor, backgroundColor, singleToneColor);
         mTextColor = singleToneColor;
-        if (mBatteryPercentView != null) {
-            mBatteryPercentView.setTextColor(singleToneColor);
-        }
+        updatePercentTextColor();
 
         if (mUnknownStateDrawable != null) {
             mUnknownStateDrawable.setTint(singleToneColor);
