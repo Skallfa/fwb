@@ -255,6 +255,10 @@ constructor(
                 lastInsets?.let { updateConstraintsForInsets(header, it) }
                 updateResources()
             }
+
+            override fun onUiModeChanged() {
+                updateResources()
+            }
         }
         
     override fun onInit() {
@@ -278,7 +282,6 @@ constructor(
         privacyIconsController.chipVisibilityListener = chipVisibilityListener
         updateVisibility()
         updateTransition()
-        updateResources()
 
         header.setOnApplyWindowInsetsListener(insetListener)
 
@@ -294,6 +297,7 @@ constructor(
         configurationController.addCallback(configurationControllerListener)
         demoModeController.addCallback(demoModeReceiver)
         statusBarIconController.addIconGroup(iconManager)
+        updateResources()
     }
 
     override fun onViewDetached() {
