@@ -74,19 +74,6 @@ public class QSCarrierGroup extends LinearLayout {
         }
     }
 
-    public void updateColors(int color, ColorStateList colorStateList) {
-        getNoSimTextView().setTextColor(color);
-        QSCarrier[] qsCarriers = { getCarrier1View(), getCarrier2View(), getCarrier3View() };
-        for (QSCarrier qsCarrier : qsCarriers) {
-            for (int i = 0; i < qsCarrier.getChildCount(); i++) {
-                qsCarrier.updateColors(colorStateList);
-                if (qsCarrier.getChildAt(i) instanceof TextView) {
-                    ((TextView) qsCarrier.getChildAt(i)).setTextColor(color);
-                }
-            }
-        }
-    }
-
     public void updateTextAppearance(@StyleRes int resId) {
         FontSizeUtils.updateFontSizeFromStyle(getNoSimTextView(), resId);
         getCarrier1View().updateTextAppearance(resId);
