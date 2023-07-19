@@ -198,6 +198,7 @@ abstract class ThemedResourceCache<T> {
      */
     private boolean prune(@Config int configChanges) {
         synchronized (this) {
+            if (mThemedEntries != null) {
             mThemedEntries.entrySet()
                     .removeIf(entry -> pruneEntriesLocked(entry.getValue(), configChanges));
             }
@@ -208,6 +209,7 @@ abstract class ThemedResourceCache<T> {
             return mThemedEntries == null && mNullThemedEntries == null
                     && mUnthemedEntries == null;
         }
+    }
 
     private boolean pruneEntriesLocked(@Nullable LongSparseArray<WeakReference<T>> entries,
             @Config int configChanges) {
