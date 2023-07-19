@@ -153,8 +153,6 @@ import com.android.server.os.DeviceIdentifiersPolicyService;
 import com.android.server.os.NativeTombstoneManagerService;
 import com.android.server.os.SchedulingPolicyService;
 import com.android.server.people.PeopleService;
-import com.android.server.pocket.PocketService;
-import com.android.server.pocket.PocketBridgeService;
 import com.android.server.pm.ApexManager;
 import com.android.server.pm.ApexSystemServiceInfo;
 import com.android.server.pm.CrossProfileAppsService;
@@ -496,8 +494,6 @@ public final class SystemServer implements Dumpable {
 
     /** Start the IStats services. This is a blocking call and can take time. */
     private static native void startIStatsService();
-
-    public boolean safeMode = false;
 
     /**
      * Start the memtrack proxy service.
