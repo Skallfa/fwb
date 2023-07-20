@@ -480,6 +480,7 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
             return;
         }
 
+
         mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.BRIGHTNESS_SLIDER_STYLE),
                 false, new ContentObserver(mBgHandler) {
@@ -501,6 +502,18 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
                                         Settings.Secure.BRIGHTNESS_SLIDER_STYLE, 0,
                                         UserHandle.USER_CURRENT);
                         mThemeManager.setBrightnessSliderStyle(brightnessSliderStyle);
+			}
+                },
+                UserHandle.USER_ALL);
+
+        mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.HIDE_IME_SPACE_ENABLE),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
                     }
                 },
                 UserHandle.USER_ALL);
