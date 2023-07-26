@@ -11963,12 +11963,6 @@ public final class Settings {
         public static final String LAUNCHER_HIDDEN_APPS = "launcher_hidden_apps";
 
         /**
-         * Whether to turn on black theme
-         * @hide
-         */
-        public static final String SYSTEM_BLACK_THEME = "system_black_theme";
-
-        /**
          * Control whether to hide ADB and Developer settings enable status.
          * @hide
          */
