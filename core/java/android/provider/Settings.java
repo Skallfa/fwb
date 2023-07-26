@@ -6115,12 +6115,6 @@ public final class Settings {
         @Readable
         public static final String TOAST_ICON = "toast_icon";
 
-        /**
-         * Whether to show data usage in qs footer
-         * @hide
-         */
-        public static final String QS_FOOTER_DATA_USAGE = "qs_footer_data_usage";
-
          /**
          * Show app volume rows in volume panel
          * @hide
