@@ -7034,9 +7034,41 @@ public final class PowerManagerService extends SystemService
         public boolean isAmbientDisplaySuppressed() {
             return mAmbientDisplaySuppressionController.isSuppressed();
         }
+    }   
+
+    /**
+     * Listens to changes in device state and updates the interactivity time.
+     * Any changes to the device state are treated as user interactions.
+     */
+    class DeviceStateListener implements DeviceStateManager.DeviceStateCallback {
+        private int mDeviceState = DeviceStateManager.INVALID_DEVICE_STATE;
+
+        @Override
+        public void onStateChanged(int deviceState) {
+            if (mDeviceState != deviceState) {
+                mDeviceState = deviceState;
+                // Device-state interactions are applied to the default display so that they
+                // are reflected only with the default power group.
+                userActivityInternal(Display.DEFAULT_DISPLAY, mClock.uptimeMillis(),
+                        PowerManager.USER_ACTIVITY_EVENT_DEVICE_STATE, /* flags= */0,
+                        Process.SYSTEM_UID);
+            }
+        }
+    };
+
+    static boolean isSameCallback(IWakeLockCallback callback1,
+            IWakeLockCallback callback2) {
+        if (callback1 == callback2) {
+            return true;
+        }
+        if (callback1 != null && callback2 != null
+                && callback1.asBinder() == callback2.asBinder()) {
+            return true;
+        }
+        return false;
     }
 
-    private void cleanupProximity() {
+   private void cleanupProximity() {
         synchronized (mProximityWakeLock) {
             cleanupProximityLocked();
         }
@@ -7107,36 +7139,4 @@ public final class PowerManagerService extends SystemService
                    mProximitySensor, SensorManager.SENSOR_DELAY_FASTEST);
         }
     }            
-
-    /**
-     * Listens to changes in device state and updates the interactivity time.
-     * Any changes to the device state are treated as user interactions.
-     */
-    class DeviceStateListener implements DeviceStateManager.DeviceStateCallback {
-        private int mDeviceState = DeviceStateManager.INVALID_DEVICE_STATE;
-
-        @Override
-        public void onStateChanged(int deviceState) {
-            if (mDeviceState != deviceState) {
-                mDeviceState = deviceState;
-                // Device-state interactions are applied to the default display so that they
-                // are reflected only with the default power group.
-                userActivityInternal(Display.DEFAULT_DISPLAY, mClock.uptimeMillis(),
-                        PowerManager.USER_ACTIVITY_EVENT_DEVICE_STATE, /* flags= */0,
-                        Process.SYSTEM_UID);
-            }
-        }
-    };
-
-    static boolean isSameCallback(IWakeLockCallback callback1,
-            IWakeLockCallback callback2) {
-        if (callback1 == callback2) {
-            return true;
-        }
-        if (callback1 != null && callback2 != null
-                && callback1.asBinder() == callback2.asBinder()) {
-            return true;
-        }
-        return false;
-    }
 }
