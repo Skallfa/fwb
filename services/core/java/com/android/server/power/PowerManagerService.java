@@ -1076,7 +1076,7 @@ public final class PowerManagerService extends SystemService
     private SensorManager mSensorManager;
     private Sensor mProximitySensor;
     private SensorEventListener mProximityListener;
-    private PowerManager.WakeLock mProximityWakeLock;            
+    private android.os.PowerManager.WakeLock mProximityWakeLock;            
 
     private boolean mNavbarEnabled;
 
