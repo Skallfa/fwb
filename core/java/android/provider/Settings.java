@@ -6041,7 +6041,6 @@ public final class Settings {
          * Whether Proximity on Wake is Enabled or not
          * @hide
          */
-        @Readable
         public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
 
         /**
