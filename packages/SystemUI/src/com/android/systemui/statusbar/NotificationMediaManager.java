@@ -238,7 +238,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
 
         mTunerService = tunerService;
         mTunerService.addTunable(this, LOCKSCREEN_MEDIA_METADATA);
-        mtunerService.addTunable(this, LOCKSCREEN_ALBUMART_FILTER);
+        mTunerService.addTunable(this, LOCKSCREEN_ALBUMART_FILTER);
     }
 
     @Override
