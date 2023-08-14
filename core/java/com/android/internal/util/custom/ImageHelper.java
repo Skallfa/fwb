@@ -2,7 +2,11 @@
 * Copyright (C) 2013 SlimRoms Project
 * Copyright (C) 2015 TeamEos Project
 * Copyright (C) 2015-2016 The DirtyUnicorns Project
+<<<<<<< HEAD:core/java/com/android/internal/util/custom/ImageHelper.java
 * Copyright (C) 2019-2021 crDroid Android Project
+=======
+* Copyright (C) 2019-2023 crDroid Android Project
+>>>>>>> b1bfcdedf499 (SystemUI: QS Header Image extended settings [1/2]):core/java/com/android/internal/util/blackiron/ImageHelper.java
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -175,6 +179,13 @@ public class ImageHelper {
     }
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+<<<<<<< HEAD:core/java/com/android/internal/util/custom/ImageHelper.java
+=======
+        return getRoundedCornerBitmap(bitmap, 24f);
+    }
+
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
+>>>>>>> b1bfcdedf499 (SystemUI: QS Header Image extended settings [1/2]):core/java/com/android/internal/util/blackiron/ImageHelper.java
         if (bitmap == null) {
             return null;
         }
@@ -186,7 +197,10 @@ public class ImageHelper {
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
         final RectF rectF = new RectF(rect);
+<<<<<<< HEAD:core/java/com/android/internal/util/custom/ImageHelper.java
         final float roundPx = 24;
+=======
+>>>>>>> b1bfcdedf499 (SystemUI: QS Header Image extended settings [1/2]):core/java/com/android/internal/util/blackiron/ImageHelper.java
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
@@ -326,10 +340,15 @@ public class ImageHelper {
                 image.getWidth(), image.getHeight(),
                 Bitmap.Config.ARGB_8888);
         RenderScript renderScript = RenderScript.create(context);
+<<<<<<< HEAD:core/java/com/android/internal/util/custom/ImageHelper.java
         Allocation blurInput = Allocation.createFromBitmap(renderScript, image,
                     Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SHARED);
         Allocation blurOutput = Allocation.createFromBitmap(renderScript, bitmap,
                     Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SHARED);
+=======
+        Allocation blurInput = Allocation.createFromBitmap(renderScript, image);
+        Allocation blurOutput = Allocation.createFromBitmap(renderScript, bitmap);
+>>>>>>> b1bfcdedf499 (SystemUI: QS Header Image extended settings [1/2]):core/java/com/android/internal/util/blackiron/ImageHelper.java
 
         ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(renderScript,
                 Element.U8_4(renderScript));
