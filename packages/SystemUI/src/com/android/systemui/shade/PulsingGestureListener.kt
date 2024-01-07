@@ -116,21 +116,6 @@ class PulsingGestureListener @Inject constructor(
         if (e.actionMasked == MotionEvent.ACTION_UP &&
                 statusBarStateController.isDozing &&
                 (doubleTapEnabled || singleTapEnabled || doubleTapEnabledNative) &&
-                !falsingManager.isProximityNear
-            ) {
-                centralSurfaces.wakeUpIfDozing(
-                        SystemClock.uptimeMillis(),
-                        notificationShadeWindowView,
-                        "PULSING_DOUBLE_TAP",
-                        PowerManager.WAKE_REASON_TAP)
-                return true
-            } else if (!statusBarStateController.isDozing &&
-                doubleTapToSleepEnabled &&
-                (e.getY() < quickQsOffsetHeight || statusBarStateController.getState() == StatusBarState.KEYGUARD)
-            ) {
-                powerManager.goToSleep(e.getEventTime())
-                return true
-            }
                 !falsingManager.isProximityNear &&
                 !falsingManager.isFalseDoubleTap
         ) {
