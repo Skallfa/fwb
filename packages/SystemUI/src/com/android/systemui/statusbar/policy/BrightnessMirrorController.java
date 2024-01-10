@@ -69,17 +69,6 @@ public class BrightnessMirrorController
         });
         mVisibilityCallback = visibilityCallback;
         updateResources();
-
-        TunerService.Tunable tunable = (key, newValue) -> {
-            if (QS_SHOW_AUTO_BRIGHTNESS.equals(key)) {
-                mShouldShowAutoBrightness = TunerService.parseIntegerSwitch(newValue, true);
-                updateIcon();
-            }
-        };
-        Dependency.get(TunerService.class).addTunable(tunable, QS_SHOW_AUTO_BRIGHTNESS);
-
-        mIsAutomaticBrightnessAvailable = mBrightnessMirror.getContext().getResources().getBoolean(
-                com.android.internal.R.bool.config_automatic_brightness_available);
     }
 
     public void showMirror() {
