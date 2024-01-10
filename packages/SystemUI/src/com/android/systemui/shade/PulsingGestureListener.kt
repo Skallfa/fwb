@@ -16,6 +16,7 @@
 
 package com.android.systemui.shade
 
+import android.content.Context
 import android.hardware.display.AmbientDisplayConfiguration
 import android.os.PowerManager
 import android.os.SystemClock
@@ -31,7 +32,6 @@ import com.android.systemui.plugins.statusbar.StatusBarStateController
 import com.android.systemui.settings.UserTracker
 import com.android.systemui.statusbar.phone.CentralSurfaces
 import com.android.systemui.statusbar.phone.dagger.CentralSurfacesComponent
-import com.android.systemui.statusbar.StatusBarState
 import com.android.systemui.tuner.TunerService
 import com.android.systemui.tuner.TunerService.Tunable
 import java.io.PrintWriter
@@ -55,9 +55,11 @@ class PulsingGestureListener @Inject constructor(
         private val ambientDisplayConfiguration: AmbientDisplayConfiguration,
         private val statusBarStateController: StatusBarStateController,
         private val shadeLogger: ShadeLogger,
+        private val powerManager: PowerManager,
         userTracker: UserTracker,
         tunerService: TunerService,
-        dumpManager: DumpManager
+        dumpManager: DumpManager,
+        context: Context
 ) : GestureDetector.SimpleOnGestureListener(), Dumpable {
     private var doubleTapEnabled = false
     private var singleTapEnabled = false
