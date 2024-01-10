@@ -247,21 +247,6 @@ public class ThemeOverlayApplier implements Dumpable {
         });
     }
 
-    public void setIsBlackTheme(boolean black) {
-        mIsBlackTheme = black;
-    }
-
-    public void applyBlackTheme(boolean enable) {
-        mBgExecutor.execute(() -> {
-            try {
-                mOverlayManager.setEnabled("com.android.system.theme.black",
-                        enable, UserHandle.SYSTEM);
-            } catch (SecurityException | IllegalStateException e) {
-                Log.e(TAG, "setEnabled failed", e);
-            }
-        });
-    }
-
     /* Set brightness slider styles */
     public void setBrightnessSliderStyle(int brightnessSliderStyle) {
         mBgExecutor.execute(() -> {
