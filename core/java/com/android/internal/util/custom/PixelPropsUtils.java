@@ -181,14 +181,14 @@ public class PixelPropsUtils {
 
                 dlog("Spoofing build for GMS");
                 // Alter build parameters to pixel for avoiding hardware attestation enforcement
-                setPropValue("PRODUCT", "sailfish");
-                setPropValue("MODEL", "Pixel");
-                setPropValue("DEVICE", "sailfish");
-                setPropValue("FINGERPRINT", "google/sailfish/sailfish:8.1.0/OPM2.171019.029/4657601:user/release-keys");
-                setPropValue("TYPE", "user");
-                setPropValue("TAGS", "release-keys");
-                setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.O_MR1);
-                setVersionFieldString("SECURITY_PATCH", "2018-04-05");
+                    setPropValue("BRAND", "YU nitrogen");
+                    setPropValue("MANUFACTURER", "YU");
+                    setPropValue("DEVICE", "YUREKA");
+                    setPropValue("ID", "LMY49J");
+                    setPropValue("FINGERPRINT", "YU/YUREKA/YUREKA:5.1.1/LMY49J/YOG4PAS8A4:user/release-keys");
+                    setPropValue("MODEL", "YU5510");
+                    setPropValue("PRODUCT", "YUREKA");
+                    setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.N);
                 return true;
             }
         }
