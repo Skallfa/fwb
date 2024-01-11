@@ -1546,18 +1546,6 @@ public final class SystemServiceRegistry {
                         return new AmbientContextManager(ctx.getOuterContext(), manager);
                     }});
 
-        registerService(Context.POCKET_SERVICE, PocketManager.class,
-                new CachedServiceFetcher<PocketManager>() {
-                    @Override
-                    public PocketManager createService(ContextImpl ctx)
-                            throws ServiceNotFoundException {
-                        IBinder binder = ServiceManager.getServiceOrThrow(
-                                Context.POCKET_SERVICE);
-                        IPocketService service =
-                                IPocketService.Stub.asInterface(binder);
-                        return new PocketManager(ctx.getOuterContext(), service);
-                    }});
-
         registerService(Context.APP_LOCK_SERVICE, AppLockManager.class,
                 new CachedServiceFetcher<AppLockManager>() {
                     @Override
