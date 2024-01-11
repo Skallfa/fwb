@@ -166,6 +166,7 @@
             android:singleLine="true"
             android:gravity="center"
             android:visibility="gone"
+            android:layout_gravity="center"
         />
     </com.android.keyguard.AlphaOptimizedLinearLayout>
 
