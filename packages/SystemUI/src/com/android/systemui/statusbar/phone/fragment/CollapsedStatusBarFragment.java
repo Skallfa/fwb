@@ -147,7 +147,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private Context mContext;
     private boolean mIsClockBlacklisted;
 
-    private boolean mShowSBClockBg = true;
+    private int mShowSBClockBg;
     private final Handler mHandler = new Handler();
 
     private class SettingsObserver extends ContentObserver {
@@ -810,13 +810,18 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                 Settings.System.STATUSBAR_CLOCK_CHIP, 0,
                 UserHandle.USER_CURRENT) == 1;
 
-        if (mShowSBClockBg) {
-            mClockView.setBackgroundResource(R.drawable.sb_date_bg);
+        if (mShowSBClockBg != 0) {
+            String chipStyleUri = "sb_date_bg" + String.valueOf(mShowSBClockBg);
+            int resId = getContext().getResources().getIdentifier(chipStyleUri, "drawable", "com.android.systemui");
+            mClockView.setBackgroundResource(resId);
             mClockView.setPadding(10,2,10,2);
-            mCenterClockView.setBackgroundResource(R.drawable.sb_date_bg);
+            mClockView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);    
+            mCenterClockView.setBackgroundResource(resId);
             mCenterClockView.setPadding(10,2,10,2);
-            mRightClockView.setBackgroundResource(R.drawable.sb_date_bg);
+            mCenterClockView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);    
+            mRightClockView.setBackgroundResource(resId);
             mRightClockView.setPadding(10,2,10,2);
+            mRightClockView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);    
         } else {
             int clockPaddingStart = getResources().getDimensionPixelSize(
                     R.dimen.status_bar_clock_starting_padding);
@@ -832,6 +837,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             mCenterClockView.setPadding(0,0,0,0);
             mRightClockView.setBackgroundResource(0);
             mRightClockView.setPadding(0,0,0,0);
+            mClockView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            mCenterClockView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            mRightClockView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);    
         }
     }
 }
