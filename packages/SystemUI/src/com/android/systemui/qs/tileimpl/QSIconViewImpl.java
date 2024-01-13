@@ -263,8 +263,6 @@ public class QSIconViewImpl extends QSIconView {
         } else if (state.state == Tile.STATE_INACTIVE) {
             return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
         } else if (state.state == Tile.STATE_ACTIVE) {
-            return Utils.getColorAttrDefaultColor(context,
-                    com.android.internal.R.attr.textColorPrimaryInverse);
             if (qsPanelStyle == 1 || qsPanelStyle == 2) {
                 return Utils.getColorAttrDefaultColor(context,
                         android.R.attr.colorAccent);
