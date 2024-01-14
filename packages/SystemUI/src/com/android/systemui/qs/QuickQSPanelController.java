@@ -22,12 +22,17 @@ import static com.android.systemui.qs.dagger.QSFragmentModule.QS_USING_MEDIA_PLA
 
 import androidx.annotation.VisibleForTesting;
 
+import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
+
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.R;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.media.controls.ui.MediaHierarchyManager;
 import com.android.systemui.media.controls.ui.MediaHost;
+import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.qs.customize.QSCustomizerController;
 import com.android.systemui.qs.dagger.QSScope;
@@ -75,6 +80,7 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> 
      ) {
         super(view, qsHost, qsCustomizerController, usingMediaPlayer, mediaHost, metricsLogger,
                 uiEventLogger, qsLogger, dumpManager, mainHandler, systemSettings);
+        mUsingCollapsedLandscapeMediaProvider = usingCollapsedLandscapeMediaProvider;
         mTunerService = tunerService;
 
         mBrightnessSliderController = brightnessSliderFactory.create(getContext(), mView);
