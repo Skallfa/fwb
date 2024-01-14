@@ -46,7 +46,6 @@ public final class NotificationRecordExtractorData {
     private final float mRankingScore;
     private final boolean mIsConversation;
     private final int mProposedImportance;
-    private final boolean mIsBubbleUpSuppressedByAppLock;
 
     NotificationRecordExtractorData(int position, int visibility, boolean showBadge,
             boolean allowBubble, boolean isBubble, NotificationChannel channel, String groupKey,
@@ -54,7 +53,7 @@ public final class NotificationRecordExtractorData {
             Integer userSentiment, Integer suppressVisually,
             ArrayList<Notification.Action> systemSmartActions,
             ArrayList<CharSequence> smartReplies, int importance, float rankingScore,
-            boolean isConversation, boolean isBubbleUpSuppressedByAppLock, int proposedImportance) {
+            boolean isConversation, int proposedImportance) {
         mPosition = position;
         mVisibility = visibility;
         mShowBadge = showBadge;
@@ -71,7 +70,6 @@ public final class NotificationRecordExtractorData {
         mImportance = importance;
         mRankingScore = rankingScore;
         mIsConversation = isConversation;
-        mIsBubbleUpSuppressedByAppLock = isBubbleUpSuppressedByAppLock;
         mProposedImportance = proposedImportance;
     }
 
@@ -92,7 +90,6 @@ public final class NotificationRecordExtractorData {
                 || !Objects.equals(mSystemSmartActions, r.getSystemGeneratedSmartActions())
                 || !Objects.equals(mSmartReplies, r.getSmartReplies())
                 || mImportance != r.getImportance()
-                || mIsBubbleUpSuppressedByAppLock != r.isBubbleUpSuppressedByAppLock()
                 || mProposedImportance != r.getProposedImportance();
     }
 
