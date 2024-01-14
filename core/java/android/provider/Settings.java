@@ -12008,12 +12008,6 @@ public final class Settings {
         public static final String SHOW_WIFI_STANDARD_ICON = "show_wifi_standard_icon";
 
         /**
-         * List of ; separated apps to be hidden from launcher.
-         * @hide
-         */
-        public static final String LAUNCHER_HIDDEN_APPS = "launcher_hidden_apps";
-
-        /**
          * Control whether to hide ADB and Developer settings enable status.
          * @hide
          */
