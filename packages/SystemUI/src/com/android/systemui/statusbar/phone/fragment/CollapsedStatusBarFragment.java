@@ -27,7 +27,6 @@ import android.annotation.Nullable;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.ContextResolver;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.ContentObserver;
