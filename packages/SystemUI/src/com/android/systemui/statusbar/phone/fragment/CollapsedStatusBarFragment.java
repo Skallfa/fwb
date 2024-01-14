@@ -26,12 +26,9 @@ import static com.android.systemui.statusbar.events.SystemStatusAnimationSchedul
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.ContentObserver;
-import android.os.Handler;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.UserHandle;
@@ -119,9 +116,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private LinearLayout mEndSideContent;
     private View mOngoingCallChip;
     private View mNotificationIconAreaInner;
-    private View mClockView;
-    private View mCenterClockView;
-    private View mRightClockView;    
     private int mDisabled1;
     private int mDisabled2;
     private DarkIconManager mDarkIconManager;
@@ -147,27 +141,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private ClockController mClockController;
     private Context mContext;
     private boolean mIsClockBlacklisted;
-
-    private int mShowSBClockBg;
-    private final Handler mHandler = new Handler();
-
-    private class SettingsObserver extends ContentObserver {
-       SettingsObserver(Handler handler) {
-           super(handler);
-       }
-       void observe() {
-         mContentResolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUSBAR_CLOCK_CHIP),
-                    false, this, UserHandle.USER_ALL);
-       }
-
-       @Override
-       public void onChange(boolean selfChange) {
-           updateSettings(true);
-       }
-    }
-    private SettingsObserver mSettingsObserver;
-    private ContentResolver mContentResolver;    
 
     private List<String> mBlockedIcons = new ArrayList<>();
     private Map<Startable, Startable.State> mStartableStates = new ArrayMap<>();
@@ -309,17 +282,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
         mDarkIconManager = mDarkIconManagerFactory.create(
                 view.findViewById(R.id.statusIcons), StatusBarLocation.HOME);
-                mContentResolver = getContext().getContentResolver();
-        mSettingsObserver = new SettingsObserver(mHandler);  
         mDarkIconManager.setShouldLog(true);
         updateBlockedIcons();
         mStatusBarIconController.addIconGroup(mDarkIconManager);
         mEndSideContent = mStatusBar.findViewById(R.id.status_bar_end_side_content);
         mClockController = mStatusBar.getClockController();
         mOngoingCallChip = mStatusBar.findViewById(R.id.ongoing_call_chip);
-        mClockView = mStatusBar.findViewById(R.id.clock);
-        mCenterClockView = mStatusBar.findViewById(R.id.clock_center);
-        mRightClockView = mStatusBar.findViewById(R.id.clock_right);    
         showEndSideContent(false);
         showClock(false);
         initOperatorName();
@@ -332,8 +300,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                 new StatusBarSystemEventAnimator(mEndSideContent, getResources());
         mCarrierConfigTracker.addCallback(mCarrierConfigCallback);
         mCarrierConfigTracker.addDefaultDataSubscriptionChangedListener(mDefaultDataListener);
-        mSettingsObserver.observe();
-        updateSettings(false);     
     }
 
     @Override
@@ -522,7 +488,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             if (!isRightClock) {
                 state |= DISABLE_CLOCK;
             }
-                state |= DISABLE_NOTIFICATION_ICONS;
         }
 
         if (mOngoingCallController.hasOngoingCall()) {
@@ -802,45 +767,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                 pw.println(startable + ", state: " + startableState);
             }
             pw.decreaseIndent();
-        }
-    }
-
-        public void updateSettings(boolean animate) {
-
-        mShowSBClockBg = Settings.System.getIntForUser(mContentResolver,
-                Settings.System.STATUSBAR_CLOCK_CHIP, 0,
-                UserHandle.USER_CURRENT) == 1;
-
-        if (mShowSBClockBg != 0) {
-            String chipStyleUri = "sb_date_bg" + String.valueOf(mShowSBClockBg);
-            int resId = getContext().getResources().getIdentifier(chipStyleUri, "drawable", "com.android.systemui");
-            mClockView.setBackgroundResource(resId);
-            mClockView.setPadding(10,2,10,2);
-            mClockView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);    
-            mCenterClockView.setBackgroundResource(resId);
-            mCenterClockView.setPadding(10,2,10,2);
-            mCenterClockView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);    
-            mRightClockView.setBackgroundResource(resId);
-            mRightClockView.setPadding(10,2,10,2);
-            mRightClockView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);    
-        } else {
-            int clockPaddingStart = getResources().getDimensionPixelSize(
-                    R.dimen.status_bar_clock_starting_padding);
-            int clockPaddingEnd = getResources().getDimensionPixelSize(
-                    R.dimen.status_bar_clock_end_padding);
-            int leftClockPaddingStart = getResources().getDimensionPixelSize(
-                    R.dimen.status_bar_left_clock_starting_padding);
-            int leftClockPaddingEnd = getResources().getDimensionPixelSize(
-                    R.dimen.status_bar_left_clock_end_padding);    
-            mClockView.setBackgroundResource(0);
-            mClockView.setPadding(0,0,0,0);
-            mCenterClockView.setBackgroundResource(0);
-            mCenterClockView.setPadding(0,0,0,0);
-            mRightClockView.setBackgroundResource(0);
-            mRightClockView.setPadding(0,0,0,0);
-            mClockView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
-            mCenterClockView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
-            mRightClockView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);    
         }
     }
 }
