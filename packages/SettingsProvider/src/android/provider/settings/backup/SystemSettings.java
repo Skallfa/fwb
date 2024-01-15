@@ -94,5 +94,6 @@ public class SystemSettings {
         Settings.System.EDGE_LIGHT_COLOR_MODE,
         Settings.System.EDGE_LIGHT_CUSTOM_COLOR,
         Settings.System.QS_PANEL_STYLE,
+	    Settings.System.LOCKSCREEN_ROTATION,
     };
 }
