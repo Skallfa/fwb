@@ -27,6 +27,7 @@ import android.os.RemoteException;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.DisplayCutout;
@@ -56,13 +57,19 @@ import com.android.systemui.shared.rotation.RotationButtonController;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.CommandQueue.Callbacks;
 import com.android.systemui.util.leak.RotationUtils;
+import com.android.systemui.tuner.TunerService;
 
 import java.util.Objects;
 
-public class PhoneStatusBarView extends FrameLayout implements Callbacks {
+public class PhoneStatusBarView extends FrameLayout implements Callbacks, TunerService.Tunable {
     private static final String TAG = "PhoneStatusBarView";
     private final CommandQueue mCommandQueue;
     private final StatusBarContentInsetsProvider mContentInsetsProvider;
+
+    private static final String SB_PADDING_LEFT =
+            "system:" + "SB_PADDING_LEFT";     
+    private static final String SB_PADDING_RIGHT =
+            "system:" + "SB_PADDING_RIGHT";
 
     private DarkReceiver mBattery;
     private ClockController mClockController;
@@ -82,6 +89,8 @@ public class PhoneStatusBarView extends FrameLayout implements Callbacks {
      * Draw this many pixels into the left/right side of the cutout to optimally use the space
      */
     private int mCutoutSideNudge = 0;
+    private int mBarPaddingStart;
+    private int mBarPaddingEnd;
 
     public PhoneStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -151,6 +160,8 @@ public class PhoneStatusBarView extends FrameLayout implements Callbacks {
         mCutoutSpace = findViewById(R.id.cutout_space_view);
 
         updateResources();
+        Dependency.get(TunerService.class).addTunable(this,
+                SB_PADDING_LEFT, SB_PADDING_RIGHT); 
     }
 
     @Override
@@ -296,9 +307,9 @@ public class PhoneStatusBarView extends FrameLayout implements Callbacks {
 
         View sbContents = findViewById(R.id.status_bar_contents);
         sbContents.setPaddingRelative(
-                statusBarPaddingStart,
+                (int) mBarPaddingStart,
                 statusBarPaddingTop,
-                statusBarPaddingEnd,
+                (int) mBarPaddingEnd,
                 0);
 
         findViewById(R.id.notification_lights_out)
@@ -358,5 +369,22 @@ public class PhoneStatusBarView extends FrameLayout implements Callbacks {
 
     public ClockController getClockController() {
         return mClockController;
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        if (SB_PADDING_LEFT.equals(key)) {
+            int mPaddingStart = TunerService.parseInteger(newValue, 0);
+            mBarPaddingStart = Math.round(TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, mPaddingStart,
+                getResources().getDisplayMetrics()));        
+            updateStatusBarHeight();
+        } else if (SB_PADDING_RIGHT.equals(key)) {
+            int mPaddingEnd = TunerService.parseInteger(newValue, 0);
+            mBarPaddingEnd = Math.round(TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, mPaddingEnd,
+                getResources().getDisplayMetrics()));   
+            updateStatusBarHeight();
+        }
     }
 }
