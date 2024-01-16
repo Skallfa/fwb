@@ -79,16 +79,10 @@
                     android:gravity="center_vertical"
                     android:clipChildren="false">
                     <ViewStub
-                        android:id="@+id/operator_name_stub"
+                        android:id="@+id/operator_name"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout="@layout/operator_name" />
-
-                    <com.android.keyguard.AlphaOptimizedLinearLayout
-                    android:id="@+id/left_icon_area"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal" >
 
                     <com.android.systemui.statusbar.policy.Clock
                         android:id="@+id/clock"
@@ -103,16 +97,14 @@
                         android:gravity="center_vertical|start"
                         android:layout_gravity="center_vertical" />
 
-                        </com.android.keyguard.AlphaOptimizedLinearLayout>
+                        <include layout="@layout/ongoing_call_chip" />
 
                     <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
                         android:id="@+id/notification_icon_area"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
                         android:clipChildren="false"/>
-                    
-                    <include layout="@layout/ongoing_call_chip" />
 
                 </LinearLayout>
             </FrameLayout>
