@@ -45,7 +45,6 @@ import android.widget.LinearLayout
 import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.ContextCompat
 import com.android.settingslib.Utils
 import com.android.systemui.FontSizeUtils
 import com.android.systemui.R
@@ -103,19 +102,15 @@ open class QSTileViewImpl @JvmOverloads constructor(
             updateHeight()
         }
 
-        private val qsPanelStyle: Int = System.getIntForUser(
+        private val qsPanelStyle: Int = Settings.System.getIntForUser(
             context.contentResolver,
-            System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT
+            Settings.System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT
         )
-
-        private val tintAlpha: Boolean = qsPanelStyle == 1 || qsPanelStyle == 2 || qsPanelStyle == 10
 
     private val colorActive = Utils.getColorAttrDefaultColor(context,
             android.R.attr.colorAccent)
-   private val colorOffstate = Utils.getColorAttrDefaultColor(context, R.attr.offStateColor)
-    private val offStateAlpha = ContextCompat.getColorStateList(context, R.drawable.color_alpha_offstate)?.defaultColor ?: colorOffstate
-    private val colorInactive = if (tintAlpha) offStateAlpha else Utils.getColorAttrDefaultColor(context, R.attr.offStateColor)
-    private val colorUnavailable = Utils.applyAlpha(UNAVAILABLE_ALPHA, colorOffstate)
+   private val colorInactive = Utils.getColorAttrDefaultColor(context, R.attr.offStateColor)
+    private val colorUnavailable = Utils.applyAlpha(UNAVAILABLE_ALPHA, colorInactive)
 
     private val colorLabelActive =
             Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.textColorPrimaryInverse)
@@ -132,8 +127,8 @@ open class QSTileViewImpl @JvmOverloads constructor(
         Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.textColorTertiary)
 
         // QS Style 2
-    private val colorActiveAlpha = ContextCompat.getColorStateList(context, R.drawable.color_accent_alpha)?.defaultColor ?: Utils.applyAlpha(TILE_ALPHA, Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent))
-    private val colorInactiveAlpha = offStateAlpha
+    private val colorActiveAlpha = Utils.applyAlpha(TILE_ALPHA, Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent))
+    private val colorInactiveAlpha = resources.getColor(R.color.qs_translucent_bg)
     
     // QS Style 3
     private var randomColor: Random = Random()
