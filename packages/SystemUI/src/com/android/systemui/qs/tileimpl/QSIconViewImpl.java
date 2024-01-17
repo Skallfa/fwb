@@ -48,7 +48,7 @@ import java.util.Random;
 
 public class QSIconViewImpl extends QSIconView {
 
-    public static final long QS_ANIM_LENGTH = 350;
+    public static final long QS_ANIM_LENGTH = 450;
 
     protected final View mIcon;
     protected int mIconSizePx;
@@ -254,6 +254,7 @@ public class QSIconViewImpl extends QSIconView {
         (mRandomColor.nextInt(256) / 2f + 0.5),
          mRandomColor.nextInt(256),
          mRandomColor.nextInt(256));
+         int mWhiteTint = Color.WHITE; 
         
         if (state.disabledByPolicy || state.state == Tile.STATE_UNAVAILABLE) {
             return Utils.getColorAttrDefaultColor(
@@ -261,16 +262,21 @@ public class QSIconViewImpl extends QSIconView {
         } else if (state.state == Tile.STATE_INACTIVE) {
             return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
         } else if (state.state == Tile.STATE_ACTIVE) {
-            if (qsPanelStyle == 1 || qsPanelStyle == 2) {
-                return Utils.getColorAttrDefaultColor(context,
+            if (qsPanelStyle == 1 || qsPanelStyle == 2 || qsPanelStyle == 10) {
+               return Utils.getColorAttrDefaultColor(context,
                         android.R.attr.colorAccent);
-            } else {
-                return Utils.getColorAttrDefaultColor(context,
-                        android.R.attr.textColorPrimaryInverse);
-            }
+             } else if (qsPanelStyle == 3) {
+               return mRandomTint;
+             } else if (qsPanelStyle == 4 || qsPanelStyle == 6 || qsPanelStyle == 9) {
+               return mWhiteTint;
+             } else {
+              return Utils.getColorAttrDefaultColor(context,
+                    com.android.internal.R.attr.textColorPrimaryInverse);
+             }
         } else {
             Log.e("QSIconView", "Invalid state " + state);
             return 0;
+            
         }
     }
 
