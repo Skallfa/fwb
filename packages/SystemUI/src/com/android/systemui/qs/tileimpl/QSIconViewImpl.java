@@ -254,6 +254,7 @@ public class QSIconViewImpl extends QSIconView {
         (mRandomColor.nextInt(256) / 2f + 0.5),
          mRandomColor.nextInt(256),
          mRandomColor.nextInt(256));
+         int mWhiteTint = Color.WHITE; 
         
         if (state.disabledByPolicy || state.state == Tile.STATE_UNAVAILABLE) {
             return Utils.getColorAttrDefaultColor(
