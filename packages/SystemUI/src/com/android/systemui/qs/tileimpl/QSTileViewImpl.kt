@@ -102,9 +102,9 @@ open class QSTileViewImpl @JvmOverloads constructor(
             updateHeight()
         }
 
-        private val qsPanelStyle: Int = Settings.System.getIntForUser(
+        private val qsPanelStyle: Int = System.getIntForUser(
             context.contentResolver,
-            Settings.System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT
+            System.QS_PANEL_STYLE, 0, UserHandle.USER_CURRENT
         )
 
     private val colorActive = Utils.getColorAttrDefaultColor(context,
