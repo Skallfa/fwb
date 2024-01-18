@@ -6175,7 +6175,7 @@ public final class Settings {
         @Readable
         public static final String TOAST_ICON = "toast_icon";
 
-         /**
+        /**
          * Show app volume rows in volume panel
          * @hide
          */
@@ -6195,14 +6195,17 @@ public final class Settings {
          */
 
         /**
-
          * QS Panel style
          * @hide
          */
         public static final String QS_PANEL_STYLE = "qs_panel_style";
 
         /**
+         * @hide
+         */
+        public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
 
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
