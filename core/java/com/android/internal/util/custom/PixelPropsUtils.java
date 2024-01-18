@@ -181,13 +181,13 @@ public class PixelPropsUtils {
 
                 dlog("Spoofing build for GMS");
                 // Alter build parameters to pixel for avoiding hardware attestation enforcement
-                    setPropValue("BRAND", "Hisense");
-        setPropValue("MANUFACTURER", "Hisense");
-        setPropValue("DEVICE", "HS6735MT");
-        setPropValue("ID", "MRA58K");
-        setPropValue("FINGERPRINT", "Hisense/F30/HS6735MT:6.0/MRA58K/L1228.6.01.01:user/release-keys");
-        setPropValue("MODEL", "Hisense F30");
-        setPropValue("PRODUCT", "F30");
+                    setPropValue("BRAND", "YU nitrogen");
+                    setPropValue("MANUFACTURER", "YU");
+                    setPropValue("DEVICE", "YUREKA");
+                    setPropValue("ID", "LMY49J");
+                    setPropValue("FINGERPRINT", "YU/YUREKA/YUREKA:5.1.1/LMY49J/YOG4PAS8A4:user/release-keys");
+                    setPropValue("MODEL", "YU5510");
+                    setPropValue("PRODUCT", "YUREKA");
                     setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.N);
                 return true;
             }
