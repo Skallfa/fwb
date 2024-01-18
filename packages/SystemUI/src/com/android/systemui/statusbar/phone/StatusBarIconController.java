@@ -226,6 +226,7 @@ public interface StatusBarIconController {
                 mDarkIconDispatcher.removeDarkReceiver((DarkReceiver) mGroup.getChildAt(i));
             }
             mGroup.removeAllViews();
+            Dependency.get(TunerService.class).removeTunable(this);
         }
 
         @Override
@@ -395,6 +396,11 @@ public interface StatusBarIconController {
         private final boolean mNewIconStyle;
 
         protected ArrayList<String> mBlockList = new ArrayList<>();
+
+        private boolean mOldStyleType;
+
+        private static final String USE_OLD_MOBILETYPE =
+            "system:" + Settings.System.USE_OLD_MOBILETYPE;
 
         private boolean mShowWifiStandard;
 
@@ -569,6 +575,7 @@ public interface StatusBarIconController {
             StatusBarMobileView mobileView = onCreateStatusBarMobileView(state.subId, slot);
             mobileView.applyMobileState(state);
             mGroup.addView(mobileView, index, onCreateLayoutParams());
+            Dependency.get(TunerService.class).addTunable(this, USE_OLD_MOBILETYPE);
 
             if (mIsInDemoMode) {
                 Context mobileContext = mMobileContextProvider
@@ -808,6 +815,11 @@ public interface StatusBarIconController {
                         TunerService.parseIntegerSwitch(newValue, false);
                     updateShowWifiStandard();
                     break;
+                    case USE_OLD_MOBILETYPE:
+                    mOldStyleType =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                    updateOldStyleMobileDataIcons();
+                    break;
                 default:
                     break;
             }
@@ -819,6 +831,15 @@ public interface StatusBarIconController {
                 if (child instanceof StatusBarWifiView) {
                     ((StatusBarWifiView) child).updateWifiState(mShowWifiStandard);
                     return;
+                }
+            }
+        }
+
+        private void updateOldStyleMobileDataIcons() {
+            for (int i = 0; i < mGroup.getChildCount(); i++) {
+                View child = mGroup.getChildAt(i);
+                if (child instanceof StatusBarMobileView) {
+                    ((StatusBarMobileView) child).updateDisplayType(mOldStyleType);
                 }
             }
         }
