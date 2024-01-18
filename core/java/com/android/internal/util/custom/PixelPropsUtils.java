@@ -36,6 +36,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class PixelPropsUtils {
 
@@ -47,6 +49,9 @@ public class PixelPropsUtils {
             "com.google.android.gms/.auth.uiflows.minutemaid.MinuteMaidActivity");
 
     private static final boolean DEBUG = false;
+
+    private static final String[] sCertifiedProps =
+            Resources.getSystem().getStringArray(R.array.config_certifiedBuildProperties);
 
     private static final Map<String, Object> propsToChangeGeneric;
     private static final Map<String, Object> propsToChangePixel7Pro;
@@ -141,6 +146,24 @@ public class PixelPropsUtils {
         propsToChangePixelXL.put("FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
     }
 
+    private static String getBuildID(String fingerprint) {
+        Pattern pattern = Pattern.compile("([A-Za-z0-9]+\\.\\d+\\.\\d+\\.\\w+)");
+        Matcher matcher = pattern.matcher(fingerprint);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return "";
+    }
+
+    private static String getDeviceName(String fingerprint) {
+        String[] parts = fingerprint.split("/");
+        if (parts.length >= 2) {
+            return parts[1];
+        }
+        return "";
+    }
+
     private static boolean isGoogleCameraPackage(String packageName) {
         return packageName.startsWith("com.google.android.GoogleCamera") ||
                 Arrays.asList(customGoogleCameraPackages).contains(packageName);
@@ -180,15 +203,17 @@ public class PixelPropsUtils {
                 if (was) return true;
 
                 dlog("Spoofing build for GMS");
+                if (sCertifiedProps == null || sCertifiedProps.length == 0) return;
                 // Alter build parameters to pixel for avoiding hardware attestation enforcement
-                    setPropValue("BRAND", "YU nitrogen");
-                    setPropValue("MANUFACTURER", "YU");
-                    setPropValue("DEVICE", "YUREKA");
-                    setPropValue("ID", "LMY49J");
-                    setPropValue("FINGERPRINT", "YU/YUREKA/YUREKA:5.1.1/LMY49J/YOG4PAS8A4:user/release-keys");
-                    setPropValue("MODEL", "YU5510");
-                    setPropValue("PRODUCT", "YUREKA");
-                    setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.N);
+                    setPropValue("BRAND", sCertifiedProps[0]);
+        setPropValue("MANUFACTURER", sCertifiedProps[1]);
+        setPropValue("ID", sCertifiedProps[2].isEmpty() ? getBuildID(sCertifiedProps[6]) : sCertifiedProps[2]);
+        setPropValue("DEVICE", sCertifiedProps[3].isEmpty() ? getDeviceName(sCertifiedProps[6]) : sCertifiedProps[3]);
+        setPropValue("PRODUCT", sCertifiedProps[4].isEmpty() ? getDeviceName(sCertifiedProps[6]) : sCertifiedProps[4]);
+        setPropValue("MODEL", sCertifiedProps[5]);
+        setPropValue("FINGERPRINT", sCertifiedProps[6]);
+        setPropValue("TYPE", sCertifiedProps[7].isEmpty() ? "user" : sCertifiedProps[7]);
+        setPropValue("TAGS", sCertifiedProps[8].isEmpty() ? "release-keys" : sCertifiedProps[8]);
                 return true;
             }
         }
