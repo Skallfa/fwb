@@ -12031,6 +12031,12 @@ public final class Settings {
         public static final String HIDE_DEVELOPER_STATUS = "hide_developer_status";
 
         /**
+         * Volume styles
+         * @hide
+         */
+        public static final String CUSTOM_VOLUME_STYLES = "custom_volume_styles";
+
+        /**
          * Whether to pulse ambient on new music tracks
          * @hide
          */
