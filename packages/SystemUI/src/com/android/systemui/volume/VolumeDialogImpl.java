@@ -327,18 +327,6 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 
     // Number of animating rows
     private int mAnimatingRows = 0;
-
-    @VisibleForTesting
-    final int mVolumeRingerIconDrawableId = R.drawable.ic_speaker_on;
-    @VisibleForTesting
-    final int mVolumeRingerMuteIconDrawableId = R.drawable.ic_speaker_mute;
-
-    private int mOriginalGravity;
-    private final DevicePostureController.Callback mDevicePostureControllerCallback;
-    private final DevicePostureController mDevicePostureController;
-    private @DevicePostureController.DevicePostureInt int mDevicePosture;
-    private int mOrientation;
-    private final FeatureFlags mFeatureFlags;
     
     private int customVolumeStyles = 0;
     private ThemeUtils mThemeUtils;
@@ -857,7 +845,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         }
     }
 
-    // Helper to set layout gravity.
+   // Helper to set layout gravity.
     private void setLayoutGravity(ViewGroup viewGroup, int gravity) {
         if (viewGroup != null) {
             Object obj = viewGroup.getLayoutParams();
@@ -865,18 +853,14 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 ((FrameLayout.LayoutParams) obj).gravity = gravity;
             } else if (obj instanceof LinearLayout.LayoutParams) {
                 ((LinearLayout.LayoutParams) obj).gravity = gravity;
-    private final TunerService.Tunable mTunable = new TunerService.Tunable() {
-        @Override
+            }
+        }
+    }
+
+        private final TunerService.Tunable mTunable = new TunerService.Tunable() {
+                @Override
         public void onTuningChanged(String key, String newValue) {
-            if (VOLUME_PANEL_ON_LEFT.equals(key)) {
-                final boolean volumePanelOnLeft = TunerService.parseIntegerSwitch(newValue, false);
-                if (mVolumePanelOnLeft != volumePanelOnLeft) {
-                    mVolumePanelOnLeft = volumePanelOnLeft;
-                    mHandler.post(() -> {
-                        mControllerCallbackH.onConfigurationChanged();
-                    });
-                }
-            } else if (CUSTOM_VOLUME_STYLES.equals(key)) {
+                if (CUSTOM_VOLUME_STYLES.equals(key)) {
                 final int selectedVolStyle = TunerService.parseInteger(newValue, 2);
                 if (customVolumeStyles != selectedVolStyle) {
                     customVolumeStyles = selectedVolStyle;
@@ -888,11 +872,11 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                         }
                     });
                 }
-            }
+                        }
         }
-    }
+    };
 
-    private void setVolumeStyle(String pkgName, String category) {
+        private void setVolumeStyle(String pkgName, String category) {
         mThemeUtils.setOverlayEnabled(category, pkgName, "com.android.systemui");
     }
 
