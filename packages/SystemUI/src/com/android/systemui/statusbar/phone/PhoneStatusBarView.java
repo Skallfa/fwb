@@ -273,6 +273,7 @@ public class PhoneStatusBarView extends FrameLayout implements Callbacks {
             final boolean imeShown = (vis & InputMethodService.IME_VISIBLE) != 0;
             mRotationButtonController.getRotationButton().setCanShowRotationButton(!imeShown);
         }
+    }
     public boolean getBrightnessControlEnabled() {
         return mBrightnessControlEnabled;
     }
