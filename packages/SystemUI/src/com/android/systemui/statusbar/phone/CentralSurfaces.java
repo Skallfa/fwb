@@ -549,12 +549,6 @@ public interface CentralSurfaces extends Dumpable, ActivityStarter, LifecycleOwn
         }
     }
 
-    View getDismissAllButton();
-
-    void updateDismissAllVisibility(boolean visible);
-
-    void updateDismissAllButton();
-
     void brightnessControl(MotionEvent event);
 
     void onBrightnessChanged(boolean upOrCancel);
