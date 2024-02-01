@@ -870,29 +870,6 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             }
         }
     }
-    
-     private final TunerService.Tunable mTunable = new TunerService.Tunable() {
-        @Override
-        public void onTuningChanged(String key, String newValue) {
-            if (VOLUME_TEXTVIEW.equals(key)) {
-                final int showHider = TunerService.parseInteger(newValue, 0);
-                if (showHide != showHider) {
-                    showHide = showHider;
-                    mHandler.post(() -> {
-                        mControllerCallbackH.onConfigurationChanged();
-                    });
-                }
-            } else if (VOLUME_TEXTVIEW_STYLE.equals(key)) {
-                final int mVolumePersenStyler = TunerService.parseInteger(newValue, 0);
-                if (mVolumePersenStyle != mVolumePersenStyler) {
-                    mVolumePersenStyle = mVolumePersenStyler;
-                    mHandler.post(() -> {
-                        mControllerCallbackH.onConfigurationChanged();
-                    });
-                }
-            }
-        }
-    };
 
         private final TunerService.Tunable mTunable = new TunerService.Tunable() {
                 @Override
@@ -910,6 +887,24 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                     });
                 }
                         }
+
+		if (VOLUME_TEXTVIEW.equals(key)) {
+                final int showHider = TunerService.parseInteger(newValue, 0);
+                if (showHide != showHider) {
+                    showHide = showHider;
+                    mHandler.post(() -> {
+                        mControllerCallbackH.onConfigurationChanged();
+                    });
+                }
+            } else if (VOLUME_TEXTVIEW_STYLE.equals(key)) {
+                final int mVolumePersenStyler = TunerService.parseInteger(newValue, 0);
+                if (mVolumePersenStyle != mVolumePersenStyler) {
+                    mVolumePersenStyle = mVolumePersenStyler;
+                    mHandler.post(() -> {
+                        mControllerCallbackH.onConfigurationChanged();
+                    });
+                }
+            }
         }
     };
 
