@@ -11777,12 +11777,6 @@ public final class Settings {
         public static final String PULSE_TRIGGER_REASON = "pulse_trigger_reason";
 
         /**
-         * Whether to pulse ambient on new music tracks
-         * @hide
-         */
-        public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
-
-        /**
          * Pulse navbar music visualizer
          * @hide
          */
