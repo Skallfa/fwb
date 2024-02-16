@@ -798,7 +798,6 @@ public class NotificationIconContainer extends ViewGroup {
                     }
                 }
                 icon.setVisibleState(visibleState, animationsAllowed);
-                if (icon.getStatusBarIcon().pkg.contains("systemui"))
                 icon.setIconColor(mInNotificationIconShelf ? mThemedTextColorPrimary : iconColor,
                         needsCannedAnimation && animationsAllowed);
                 if (animate) {
@@ -819,11 +818,7 @@ public class NotificationIconContainer extends ViewGroup {
         public void initFrom(View view) {
             super.initFrom(view);
             if (view instanceof StatusBarIconView) {
-                StatusBarIconView icon = (StatusBarIconView) view;
-                if (icon.getStatusBarIcon().pkg.contains("systemui"))
-                    iconColor = ((StatusBarIconView) view).getStaticDrawableColor();
-                else
-                    return;
+                iconColor = ((StatusBarIconView) view).getStaticDrawableColor();
             }
         }
     }
