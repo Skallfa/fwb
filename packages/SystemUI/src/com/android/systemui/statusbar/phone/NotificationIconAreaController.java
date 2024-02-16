@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Trace;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -493,9 +491,7 @@ public class NotificationIconAreaController implements
         if (colorize) {
             color = DarkIconDispatcher.getTint(mTintAreas, v, tint);
         }
-        boolean newIconStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.STATUSBAR_COLORED_ICONS, 0, UserHandle.USER_CURRENT) == 1;
-        if (v.getStatusBarIcon().pkg.contains("systemui") || !newIconStyle) {
+        if (v.getStatusBarIcon().pkg.contains("systemui")) {
             v.setStaticDrawableColor(color);
             v.setDecorColor(tint);
         } else {
