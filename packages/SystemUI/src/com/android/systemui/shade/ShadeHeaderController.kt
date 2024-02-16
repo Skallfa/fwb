@@ -101,14 +101,9 @@ constructor(
     private val combinedShadeHeadersConstraintManager: CombinedShadeHeadersConstraintManager,
     private val demoModeController: DemoModeController,
     private val qsBatteryModeController: QsBatteryModeController,
-<<<<<<< HEAD
-    private val activityStarter: ActivityStarter
-) : ViewController<View>(header), Dumpable {
-=======
     private val activityStarter: ActivityStarter,
     private val featureFlags: FeatureFlags,
 ) : ViewController<View>(header), Dumpable, View.OnClickListener, View.OnLongClickListener {
->>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
 
     companion object {
         /** IDs for transitions and constraints for the [MotionLayout]. */
@@ -282,7 +277,6 @@ constructor(
         iconManager.setTint(
             Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorPrimary)
         )
-
 
         if (featureFlags.isEnabled(Flags.COMBINED_STATUS_BAR_SIGNAL_ICONS)) {
             carrierIconSlots =
