@@ -480,8 +480,6 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
             return;
         }
 
-<<<<<<< HEAD
-
         mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.BRIGHTNESS_SLIDER_STYLE),
                 false, new ContentObserver(mBgHandler) {
@@ -507,22 +505,26 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
                 },
                 UserHandle.USER_ALL);
 
-        mSystemSettings.registerContentObserverForUser(
-                Settings.System.getUriFor(Settings.System.HIDE_IME_SPACE_ENABLE),
-=======
-        mSecureSettings.registerContentObserverForUser(
+	    mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.ENABLE_COMBINED_SIGNAL_ICONS),
->>>>>>> 5b2639ed711f (SystemUI: Combined signal icons toggle [1/2])
                 false,
                 new ContentObserver(mBgHandler) {
                     @Override
                     public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
                             int userId) {
-<<<<<<< HEAD
-                        reevaluateSystemTheme(true /* forceReload */);
-=======
                         restartSystemUI();
->>>>>>> 5b2639ed711f (SystemUI: Combined signal icons toggle [1/2])
+                    }
+                },
+                UserHandle.USER_ALL);
+
+       mSystemSettings.registerContentObserverForUser(
+                Settings.System.getUriFor(Settings.System.HIDE_IME_SPACE_ENABLE),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
                     }
                 },
                 UserHandle.USER_ALL);
