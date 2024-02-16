@@ -6084,12 +6084,6 @@ public final class Settings {
          */
         public static final String ADAPTIVE_PLAYBACK_TIMEOUT = "adaptive_playback_timeout";
 
-        /**
-         * Whether StatusBar icons should use app icon
-         * @hide
-         */
-        public static final String STATUSBAR_COLORED_ICONS = "statusbar_colored_icons";
-
         /**        
          * Statusbar clock background
          * 0 - hide accented chip
