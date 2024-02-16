@@ -393,8 +393,6 @@ public interface StatusBarIconController {
         private boolean mIsInDemoMode;
         protected DemoStatusIcons mDemoStatusIcons;
 
-        private final boolean mNewIconStyle;
-
         protected ArrayList<String> mBlockList = new ArrayList<>();
 
         private boolean mOldStyleType;
@@ -421,8 +419,6 @@ public interface StatusBarIconController {
             mIconSize = mContext.getResources().getDimensionPixelSize(
                     com.android.internal.R.dimen.status_bar_icon_size);
             mLocation = location;
-            mNewIconStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUSBAR_COLORED_ICONS, 0, UserHandle.USER_CURRENT) == 1;
 
             if (statusBarPipelineFlags.runNewMobileIconsBackend()) {
                 // This starts the flow for the new pipeline, and will notify us of changes if
@@ -513,7 +509,6 @@ public interface StatusBarIconController {
         protected StatusBarIconView addIcon(int index, String slot, boolean blocked,
                 StatusBarIcon icon) {
             StatusBarIconView view = onCreateStatusBarIconView(slot, blocked);
-            view.setIconStyle(mNewIconStyle);
             view.set(icon);
             mGroup.addView(view, index, onCreateLayoutParams());
             return view;
