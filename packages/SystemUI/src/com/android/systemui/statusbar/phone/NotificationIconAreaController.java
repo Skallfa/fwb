@@ -63,7 +63,7 @@ public class NotificationIconAreaController implements
         DarkReceiver,
         StatusBarStateController.StateListener,
         NotificationWakeUpCoordinator.WakeUpListener,
-        DemoMode, TunerService.Tunable {
+        DemoMode {
 
         public static final String STATUSBAR_COLORED_ICONS =
             "system:" + Settings.System.STATUSBAR_COLORED_ICONS;
