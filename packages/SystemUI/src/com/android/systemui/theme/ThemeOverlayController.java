@@ -480,7 +480,6 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
             return;
         }
 
-<<<<<<< HEAD
 
         mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.BRIGHTNESS_SLIDER_STYLE),
@@ -509,20 +508,12 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
 
         mSystemSettings.registerContentObserverForUser(
                 Settings.System.getUriFor(Settings.System.HIDE_IME_SPACE_ENABLE),
-=======
-        mSecureSettings.registerContentObserverForUser(
-                Settings.Secure.getUriFor(Settings.Secure.ENABLE_COMBINED_SIGNAL_ICONS),
->>>>>>> 5b2639ed711f (SystemUI: Combined signal icons toggle [1/2])
                 false,
                 new ContentObserver(mBgHandler) {
                     @Override
                     public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
                             int userId) {
-<<<<<<< HEAD
                         reevaluateSystemTheme(true /* forceReload */);
-=======
-                        restartSystemUI();
->>>>>>> 5b2639ed711f (SystemUI: Combined signal icons toggle [1/2])
                     }
                 },
                 UserHandle.USER_ALL);
@@ -576,10 +567,6 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
                 }
             }
         });
-    }
-
-    private void restartSystemUI() {
-        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     private void reevaluateSystemTheme(boolean forceReload) {
