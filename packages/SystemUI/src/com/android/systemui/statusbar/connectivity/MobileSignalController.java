@@ -48,8 +48,12 @@ import com.android.settingslib.mobile.TelephonyIcons;
 import com.android.settingslib.net.SignalStrengthUtil;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.pipeline.mobile.util.MobileMappingsProxy;
+<<<<<<< HEAD
+=======
 import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.flags.Flags;
+import com.android.systemui.tuner.TunerService;
+>>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
 import com.android.systemui.util.CarrierConfigTracker;
 
 import java.io.PrintWriter;
@@ -74,10 +78,13 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     private final String mNetworkNameDefault;
     private final String mNetworkNameSeparator;
     private final ContentObserver mObserver;
+<<<<<<< HEAD
     private final Handler mHandler = new Handler();
+=======
     private final boolean mProviderModelBehavior;
     private final Handler mReceiverHandler;
     private int mImsType = IMS_TYPE_WWAN;
+>>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
     // Save entire info for logging, we only use the id.
     final SubscriptionInfo mSubscriptionInfo;
     private Map<String, MobileIconGroup> mNetworkToIconLookup;
@@ -128,12 +135,32 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 }
             };
 
+<<<<<<< HEAD
+=======
+    private final ImsStateCallback mImsStateCallback = new ImsStateCallback() {
+        @Override
+        public void onUnavailable(int reason) {
+            Log.d(mTag, "ImsStateCallback.onUnavailable: reason=" + reason);
+            unregisterImsListeners();
+        }
+
+        @Override
+        public void onAvailable() {
+            Log.d(mTag, "ImsStateCallback.onAvailable");
+            registerImsListeners();
+        }
+
+        @Override
+        public void onError() {
+            Log.e(mTag, "ImsStateCallback.onError");
+            unregisterImsListeners();
+        }
+    };
+
     private final RegistrationCallback mRegistrationCallback = new RegistrationCallback() {
         @Override
         public void onRegistered(ImsRegistrationAttributes attributes) {
             Log.d(mTag, "onRegistered: attributes=" + attributes);
-            mCurrentState.imsRegistered = true;
-            notifyListenersIfNecessary();
             int imsTransportType = attributes.getTransportType();
             int registrationAttributes = attributes.getAttributeFlags();
             if (imsTransportType == AccessNetworkConstants.TRANSPORT_TYPE_WWAN) {
@@ -162,22 +189,39 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                     notifyCallStateChange(statusIcon, mSubscriptionInfo.getSubscriptionId());
                 }
             }
+            mCurrentState.imsRegistered = true;
+            mCurrentState.imsRegistrationTech = attributes.getRegistrationTechnology();
+            notifyListenersIfNecessary();
         }
 
-         @Override
+        @Override
         public void onUnregistered(ImsReasonInfo info) {
             Log.d(mTag, "onUnregistered: info=" + info);
             mCurrentState.imsRegistered = false;
+            mCurrentState.imsRegistrationTech = REGISTRATION_TECH_NONE;
             notifyListenersIfNecessary();
+        }
+    };
+
+    private ImsMmTelManager.CapabilityCallback mCapabilityCallback
+            = new ImsMmTelManager.CapabilityCallback() {
+        @Override
+        public void onCapabilitiesStatusChanged(MmTelFeature.MmTelCapabilities config) {
+            mCurrentState.imsVoiceCapable =
+                    config.isCapable(MmTelFeature.MmTelCapabilities.CAPABILITY_TYPE_VOICE);
+            Log.d(mTag, "onCapabilitiesStatusChanged: imsVoiceCapable="
+                    + mCurrentState.imsVoiceCapable);
             mImsType = IMS_TYPE_WWAN;
             IconState statusIcon = new IconState(
                     true,
                     getCallStrengthIcon(mLastWwanLevel, /* isWifi= */false),
                     getCallStrengthDescription(mLastWwanLevel, /* isWifi= */false));
             notifyCallStateChange(statusIcon, mSubscriptionInfo.getSubscriptionId());
+            notifyListenersIfNecessary();
         }
     };
-    
+
+>>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
     public MobileSignalController(
@@ -226,7 +270,12 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             }
         };
         mMobileStatusTracker = mobileStatusTrackerFactory.createTracker(mMobileCallback);
+<<<<<<< HEAD
+=======
+        mImsMmTelManager = ImsMmTelManager.createForSubscriptionId(info.getSubscriptionId());
         mProviderModelBehavior = featureFlags.isEnabled(Flags.COMBINED_STATUS_BAR_SIGNAL_ICONS);
+        mTunerService = Dependency.get(TunerService.class);
+>>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
     }
 
     void setConfiguration(Config config) {
@@ -271,11 +320,22 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
                 Global.MOBILE_DATA + mSubscriptionInfo.getSubscriptionId()),
                 true, mObserver);
+<<<<<<< HEAD
+=======
         if (mProviderModelBehavior) {
             mReceiverHandler.post(mTryRegisterIms);
         }
+        try {
+            mImsMmTelManager.registerImsStateCallback(mContext.getMainExecutor(),
+                    mImsStateCallback);
+        } catch (ImsException e) {
+            Log.e(mTag, "failed to call registerImsStateCallback", e);
+        }
+        mTunerService.addTunable(mTunable, StatusBarIconController.ICON_HIDE_LIST);
+>>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
+    }
 
-        // There is no listener to monitor whether the IMS service is ready, so we have to retry the
+    // There is no listener to monitor whether the IMS service is ready, so we have to retry the
     // IMS registration.
     private final Runnable mTryRegisterIms = new Runnable() {
         private static final int MAX_RETRY = 12;
@@ -304,7 +364,33 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     public void unregisterListener() {
         mMobileStatusTracker.setListening(false);
         mContext.getContentResolver().unregisterContentObserver(mObserver);
+<<<<<<< HEAD
+=======
         mImsMmTelManager.unregisterImsRegistrationCallback(mRegistrationCallback);
+        mImsMmTelManager.unregisterImsStateCallback(mImsStateCallback);
+        unregisterImsListeners();
+        mTunerService.removeTunable(mTunable);
+    }
+
+    private void registerImsListeners() {
+        try {
+            mImsMmTelManager.registerMmTelCapabilityCallback(mContext.getMainExecutor(),
+                    mCapabilityCallback);
+            mImsMmTelManager.registerImsRegistrationCallback(mContext.getMainExecutor(),
+                    mRegistrationCallback);
+        } catch (Exception e) {
+            Log.e(mTag, "unable to register ims callbacks", e);
+        }
+    }
+
+    private void unregisterImsListeners() {
+        try {
+            mImsMmTelManager.unregisterMmTelCapabilityCallback(mCapabilityCallback);
+            mImsMmTelManager.unregisterImsRegistrationCallback(mRegistrationCallback);
+        } catch (Exception e) {
+            Log.e(mTag, "unable to unregister ims callbacks", e);
+        }
+>>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
     }
 
     private void updateInflateSignalStrength() {
@@ -417,7 +503,14 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         boolean showTriangle = false;
         int typeIcon = 0;
         IconState statusIcon = null;
-        
+
+<<<<<<< HEAD
+        boolean showDataIconInStatusBar =
+                (mCurrentState.dataConnected && mCurrentState.isDefault) || dataDisabled;
+        int typeIcon =
+                (showDataIconInStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
+        boolean showTriangle = mCurrentState.enabled && !mCurrentState.airplaneMode;
+=======
         if (mProviderModelBehavior) {
             boolean showDataIconStatusBar = (mCurrentState.dataConnected || dataDisabled)
                     && (mCurrentState.dataSim && mCurrentState.isDefault);
@@ -440,6 +533,8 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                     (showDataIconInStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
             showTriangle = mCurrentState.enabled && !mCurrentState.airplaneMode;
         }
+        boolean showHd = mCurrentState.imsRegistered && mCurrentState.imsVoiceCapable && !mHideHd;
+>>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
 
         return new SbInfo(showTriangle, typeIcon, statusIcon);
     }
@@ -859,5 +954,14 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             ratTypeIcon = typeIcon;
             icon = iconState;
         }
+<<<<<<< HEAD
+
+        @Override
+        public String toString() {
+            return "SbInfo: showTriangle=" + showTriangle + " ratTypeIcon=" + ratTypeIcon
+                    + " icon=" + icon;
+        }
+=======
+>>>>>>> b70627347290 (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
     }
 }
