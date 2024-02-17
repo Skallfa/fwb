@@ -169,13 +169,10 @@ public class CommandQueue extends IStatusBar.Stub implements
     private static final int MSG_GO_TO_FULLSCREEN_FROM_SPLIT = 70 << MSG_SHIFT;
     private static final int MSG_ENTER_STAGE_SPLIT_FROM_RUNNING_APP = 71 << MSG_SHIFT;
     private static final int MSG_SHOW_MEDIA_OUTPUT_SWITCHER = 72 << MSG_SHIFT;
-<<<<<<< HEAD
     private static final int MSG_SCREEN_PINNING_STATE_CHANGED      = 73 << MSG_SHIFT;
     private static final int MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED   = 74 << MSG_SHIFT;
-=======
     private static final int MSG_TOGGLE_CAMERA_FLASH = 100 << MSG_SHIFT;
->>>>>>> 6eb0d5c5a8fb (base: Add some static custom utilities)
-
+        
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
     public static final int FLAG_EXCLUDE_RECENTS_PANEL = 1 << 1;
@@ -506,13 +503,12 @@ public class CommandQueue extends IStatusBar.Stub implements
          */
         default void showMediaOutputSwitcher(String packageName) {}
 
-<<<<<<< HEAD
         default void screenPinningStateChanged(boolean enabled) {}
 
         default void leftInLandscapeChanged(boolean isLeft) {}
-=======
+            
         default void toggleCameraFlash() { }
->>>>>>> 6eb0d5c5a8fb (base: Add some static custom utilities)
+
     }
 
     @VisibleForTesting
@@ -1358,7 +1354,6 @@ public class CommandQueue extends IStatusBar.Stub implements
     }
 
     @Override
-<<<<<<< HEAD
     public void screenPinningStateChanged(boolean enabled) {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_SCREEN_PINNING_STATE_CHANGED);
@@ -1373,14 +1368,14 @@ public class CommandQueue extends IStatusBar.Stub implements
             mHandler.removeMessages(MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED);
             mHandler.obtainMessage(MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED,
                     isLeft ? 1 : 0, 0, null).sendToTarget();
-=======
+                
+    @Override
     public void toggleCameraFlash() {
         synchronized (mLock) {
             if (mHandler.hasMessages(MSG_TOGGLE_CAMERA_FLASH)) {
                 mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH);
             }
             mHandler.sendEmptyMessage(MSG_TOGGLE_CAMERA_FLASH);
->>>>>>> 6eb0d5c5a8fb (base: Add some static custom utilities)
         }
     }
 
@@ -1842,7 +1837,6 @@ public class CommandQueue extends IStatusBar.Stub implements
                         mCallbacks.get(i).showMediaOutputSwitcher(clientPackageName);
                     }
                     break;
-<<<<<<< HEAD
                 case MSG_SCREEN_PINNING_STATE_CHANGED:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).screenPinningStateChanged(msg.arg1 != 0);
@@ -1852,10 +1846,9 @@ public class CommandQueue extends IStatusBar.Stub implements
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).leftInLandscapeChanged(msg.arg1 != 0);
                     }
-=======
+                    break;        
                 case MSG_TOGGLE_CAMERA_FLASH:
                     mCallbacks.forEach(cb -> cb.toggleCameraFlash());
->>>>>>> 6eb0d5c5a8fb (base: Add some static custom utilities)
                     break;
             }
         }
