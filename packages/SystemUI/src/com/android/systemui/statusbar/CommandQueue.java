@@ -1368,7 +1368,9 @@ public class CommandQueue extends IStatusBar.Stub implements
             mHandler.removeMessages(MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED);
             mHandler.obtainMessage(MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED,
                     isLeft ? 1 : 0, 0, null).sendToTarget();
-                
+        }
+    }
+        
     @Override
     public void toggleCameraFlash() {
         synchronized (mLock) {
