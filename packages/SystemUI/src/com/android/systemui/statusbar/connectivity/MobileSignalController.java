@@ -80,13 +80,10 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     private final String mNetworkNameDefault;
     private final String mNetworkNameSeparator;
     private final ContentObserver mObserver;
-<<<<<<< HEAD
     private final Handler mHandler = new Handler();
-=======
     private final boolean mProviderModelBehavior;
     private final Handler mReceiverHandler;
     private int mImsType = IMS_TYPE_WWAN;
->>>>>>> b70260f4330f (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
     // Save entire info for logging, we only use the id.
     final SubscriptionInfo mSubscriptionInfo;
     private Map<String, MobileIconGroup> mNetworkToIconLookup;
@@ -232,47 +229,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         };
         mImsMmTelManager = ImsMmTelManager.createForSubscriptionId(info.getSubscriptionId());
         mMobileStatusTracker = mobileStatusTrackerFactory.createTracker(mMobileCallback);
-<<<<<<< HEAD
-=======
         mProviderModelBehavior = featureFlags.isEnabled(Flags.COMBINED_STATUS_BAR_SIGNAL_ICONS);
-	    Handler mHandler = new Handler();
-        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
-        settingsObserver.observe();
-    }
-
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.SHOW_FOURG_ICON), false,
-                    this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.DATA_DISABLED_ICON), false,
-                    this, UserHandle.USER_ALL);
-            updateSettings();
-        }
-
-        /*
-         *  @hide
-         */
-        @Override
-        public void onChange(boolean selfChange) {
-            updateSettings();
-        }
-    }
-
-    private void updateSettings() {
-        ContentResolver resolver = mContext.getContentResolver();
-        mDataDisabledIcon = Settings.System.getIntForUser(resolver,
-                Settings.System.DATA_DISABLED_ICON, 1,
-                UserHandle.USER_CURRENT) == 1;
-        mConfig = Config.readConfig(mContext);
-        setConfiguration(mConfig);
-        notifyListeners();
->>>>>>> b70260f4330f (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
     }
 
     void setConfiguration(Config config) {
@@ -444,14 +401,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         CharSequence qsDescription = null;
 
         if (mCurrentState.dataSim) {
-<<<<<<< HEAD
-=======
-            // If using provider model behavior, only show QS icons if the state is also default
-            if (!mCurrentState.isDefault) {
-                return new QsInfo(qsTypeIcon, qsIcon, qsDescription);
-            }
-
->>>>>>> b70260f4330f (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
             if (mCurrentState.showQuickSettingsRatIcon() || mConfig.alwaysShowDataRatIcon) {
                 qsTypeIcon = dataTypeIcon;
             }
