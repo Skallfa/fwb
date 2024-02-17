@@ -174,12 +174,9 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
         mCameraLauncherLazy = cameraLauncherLazy;
         mUserTracker = userTracker;
         mQSHost = qsHost;
-<<<<<<< HEAD
         mSecureLockscreenQSDisabler = secureLockscreenQSDisabler;
-=======
         mFlashlightController = flashlightController;
->>>>>>> 6eb0d5c5a8fb (base: Add some static custom utilities)
-
+        
         mVibrateOnOpening = resources.getBoolean(R.bool.config_vibrateOnIconAnimation);
         mCameraLaunchGestureVibrationEffect = getCameraGestureVibrationEffect(
                 mVibratorOptional, resources);
