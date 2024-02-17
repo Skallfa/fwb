@@ -274,7 +274,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         if (mProviderModelBehavior) {
             mReceiverHandler.post(mTryRegisterIms);
         }
-    }
 
         // There is no listener to monitor whether the IMS service is ready, so we have to retry the
     // IMS registration.
