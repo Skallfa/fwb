@@ -230,17 +230,10 @@ interface IStatusBarService
     /** Shows rear display educational dialog */
     void showRearDisplayDialog(int currentBaseState);
 
-<<<<<<< HEAD
     void screenPinningStateChanged(boolean enabled);
-=======
-    /**
-     * Starts the default assistant app.
-     */
-    void startAssist(in Bundle args);
 
     /**
-     * DerpFest extensions
+     * PE extensions
      */
     void toggleCameraFlash();
->>>>>>> 6eb0d5c5a8fb (base: Add some static custom utilities)
 }
