@@ -101,11 +101,8 @@ constructor(
     private val combinedShadeHeadersConstraintManager: CombinedShadeHeadersConstraintManager,
     private val demoModeController: DemoModeController,
     private val qsBatteryModeController: QsBatteryModeController,
-<<<<<<< HEAD
-    private val activityStarter: ActivityStarter
-=======
+    private val activityStarter: ActivityStarter,
     private val featureFlags: FeatureFlags,
->>>>>>> b70260f4330f (Revert "Revert^2 "Remove support for COMBINED_SIGNAL_ICONS"")
 ) : ViewController<View>(header), Dumpable {
 
     companion object {
