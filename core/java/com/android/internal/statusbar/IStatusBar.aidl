@@ -346,13 +346,11 @@ oneway interface IStatusBar
      */
     void showMediaOutputSwitcher(String packageName);
 
-<<<<<<< HEAD
     void screenPinningStateChanged(boolean enabled);
     void leftInLandscapeChanged(boolean isLeft);
-=======
+
     /**
-     * DerpFest extensions
+     * PE extensions
      */
     void toggleCameraFlash();
->>>>>>> 6eb0d5c5a8fb (base: Add some static custom utilities)
 }
